@@ -4,6 +4,7 @@ import com.sareeplatform.backend.security.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -33,10 +34,14 @@ public class SecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/products/**").permitAll()
-                .requestMatchers("/api/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                 .requestMatchers("/api/ping").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/uploads/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/products/**").hasRole("ADMIN")
+                .requestMatchers("/api/categories/**").hasRole("ADMIN")
                 .requestMatchers("/api/orders/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/cart/**").authenticated()
                 .requestMatchers("/api/orders/**").authenticated()

@@ -12,4 +12,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryIdAndActiveTrue(Long categoryId, Pageable pageable);
     List<Product> findTop8ByActiveTrueOrderByCreatedAtDesc();
     boolean existsBySku(String sku);
+    long countByActiveTrue();
 }

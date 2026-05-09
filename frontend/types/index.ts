@@ -26,6 +26,8 @@ export interface Category {
   createdAt: string;
 }
 
+export type CategoryResponse = Category;
+
 export interface PageResponse<T> {
   content: T[];
   totalElements: number;
